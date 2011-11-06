@@ -147,7 +147,7 @@ func (i *IRCConnection) Reconnect() os.Error {
 	go reader(i)
 	go writer(i)
 	i.pwrite <- fmt.Sprintf("NICK %s\r\n", i.nick)
-	i.pwrite <- fmt.Sprintf("USER %s 0.0.0.0 0.0.0.0 :%s\r\n", i.user, i.user)
+	i.pwrite <- fmt.Sprintf("USER %s 0.0.0.0 0.0.0.0 :%s\r\n", i.user, i.realname)
 	return nil
 }
 
@@ -185,14 +185,14 @@ func (i *IRCConnection) Connect(server string) os.Error {
 	go writer(i)
 	go pinger(i)
 	i.pwrite <- fmt.Sprintf("NICK %s\r\n", i.nick)
-	i.pwrite <- fmt.Sprintf("USER %s 0.0.0.0 0.0.0.0 :%s\r\n", i.user, i.user)
+	i.pwrite <- fmt.Sprintf("USER %s 0.0.0.0 0.0.0.0 :%s\r\n", i.user, i.realname)
 	if len(i.Password) > 0 {
 		i.pwrite <- fmt.Sprintf("PASS %s\r\n", i.Password)
 	}
 	return nil
 }
 
-func IRC(nick, user string) *IRCConnection {
+func IRC(nick, user, realname string) *IRCConnection {
 	irc := new(IRCConnection)
 	irc.registered = false
 	irc.pread = make(chan string, 100)
@@ -200,6 +200,7 @@ func IRC(nick, user string) *IRCConnection {
 	irc.Error = make(chan os.Error)
 	irc.nick = nick
 	irc.user = user
+	irc.realname = realname
 	irc.VerboseCallbackHandler = true
 	irc.setupCallbacks()
 	return irc

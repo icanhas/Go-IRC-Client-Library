@@ -50,7 +50,7 @@ AddCallback Example
 
 Commands
 --------
-	irc.IRC("<nick>", "<user>") //Create new ircobj
+	irc.IRC("<nick>", "<user>", "<real name>") //Create new ircobj
 	ircobj.Password = "[server password]"
 	ircobj.Connect("irc.someserver.com:6667") //Connect to server
 	ircobj.Sendraw("<string>") //sends string to server. Adds \r\n

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	irccon := irc.IRC("testgo", "testgo")
+	irccon := irc.IRC("testgo", "testgo", "testgo")
 	err := irccon.Connect("irc.efnet.net:6667")
 	if err != nil {
 		fmt.Printf("%s\n", err)
